@@ -22,4 +22,4 @@ Route::delete("/products/{product}", "ProductController@destroy");
 /* Categories */
 Route::get("/categories", "CategoryController@index");
 Route::post("/categories", "CategoryController@store");
-Route::delete("/categories/{category}", "CategoryController@store");
+Route::delete("/categories/{category}", "CategoryController@destroy");
