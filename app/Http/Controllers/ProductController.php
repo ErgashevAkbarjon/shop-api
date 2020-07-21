@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return Product::with('categories')->get();
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductController extends Controller
             $createdProduct->categories()->attach($request->categories);
         }
 
-        return $createdProduct;
+        return $createdProduct->load('categories');
     }
 
     /**
@@ -65,7 +65,7 @@ class ProductController extends Controller
             $product->categories()->sync($request->categories);
         }
 
-        return $product;
+        return $product->load('categories');
     }
 
     /**
