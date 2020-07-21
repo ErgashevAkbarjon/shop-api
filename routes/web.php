@@ -13,13 +13,3 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Products */
-Route::get("/products", "ProductController@index");
-Route::post("/products", "ProductController@store");
-Route::put("/products/{product}", "ProductController@update");
-Route::delete("/products/{product}", "ProductController@destroy");
-
-/* Categories */
-Route::get("/categories", "CategoryController@index");
-Route::post("/categories", "CategoryController@store");
-Route::delete("/categories/{category}", "CategoryController@store");
