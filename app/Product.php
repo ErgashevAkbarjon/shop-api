@@ -14,7 +14,8 @@ class Product extends Model
     ];
 
     protected $casts = [
-        "published" => "boolean"
+        "published" => "boolean",
+        "price" => "decimal:2"
     ];
 
     public function categories()
