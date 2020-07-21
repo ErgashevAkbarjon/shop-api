@@ -13,6 +13,10 @@ class Product extends Model
         "published"
     ];
 
+    protected $casts = [
+        "published" => "boolean"
+    ];
+
     public function categories()
     {
         return $this->belongsToMany(Category::class);
