@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return Category::all();
     }
 
     /**
@@ -25,7 +25,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => "required|string"
+        ]);
+
+        $newCategory = Category::create($request->all());
+        
+        return $newCategory;
     }
 
     /**
@@ -36,6 +42,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if(count($category->products)){
+            return response("Can't delete, there are products attached to the category!", 422);
+        }
+
+        $category->delete();
     }
 }
