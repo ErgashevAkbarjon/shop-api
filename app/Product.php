@@ -25,4 +25,14 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function scopeByCategory($query, $attribute, $value)
+    {
+        return $query->whereHas(
+            'categories',
+            function ($query) use($attribute, $value) {
+                $query->where($attribute, $value);
+            }
+        );
+    }
 }
