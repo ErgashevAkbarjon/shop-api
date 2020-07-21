@@ -51,7 +51,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            "name" => "string",
+            "image" => "file",
+            "price" => "numeric",
+            "published" => "boolean",
+            "categories" => "array"
+        ]);
+        
+        $product->update($request->all());
+
+        if($request->has('categories')){
+            $product->categories()->sync($request->categories);
+        }
+
+        return $product;
     }
 
     /**
@@ -62,6 +76,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
     }
 }
