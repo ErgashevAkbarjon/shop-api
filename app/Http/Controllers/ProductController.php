@@ -25,7 +25,21 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => "required|string",
+            "image" => "file",
+            "price" => "required|numeric",
+            "published" => "boolean",
+            "categories" => "array"
+        ]);
+
+        $createdProduct = Product::create($request->all());
+
+        if($request->has('categories')){
+            $createdProduct->categories()->attach($request->categories);
+        }
+
+        return $createdProduct;
     }
 
     /**
