@@ -12,9 +12,31 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Product::with('categories')->get();
+        $productsQuery = Product::with('categories');
+
+        if($request->has('name')){
+            $productsQuery->where('name', $request->name);
+        }
+
+        if($request->has('category_id')){
+            $productsQuery->byCategory('id', $request->category_id);
+        }
+
+        if($request->has('category_name')){
+            $productsQuery->byCategory('name', $request->category_name);
+        }
+
+        if($request->has('price_from')){
+            $productsQuery->where('price', '>=', $request->price_from);
+        }
+
+        if($request->has('price_to')){
+            $productsQuery->where('price', '<=', $request->price_to);
+        }
+
+        return $productsQuery->get();
     }
 
     /**
