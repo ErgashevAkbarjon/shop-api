@@ -109,5 +109,13 @@ class ProductController extends Controller
         if($request->has('price_to')){
             $productsQuery->where('price', '<=', $request->price_to);
         }
+
+        if($request->has('published')){
+            $productsQuery->where('published', $request->boolean('published'));
+        }
+
+        if(!$request->has('without_trash')){
+            $productsQuery->withTrashed();
+        }
     }
 }
