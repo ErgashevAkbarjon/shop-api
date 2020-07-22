@@ -15,26 +15,8 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $productsQuery = Product::with('categories');
-
-        if($request->has('name')){
-            $productsQuery->where('name', $request->name);
-        }
-
-        if($request->has('category_id')){
-            $productsQuery->byCategory('id', $request->category_id);
-        }
-
-        if($request->has('category_name')){
-            $productsQuery->byCategory('name', $request->category_name);
-        }
-
-        if($request->has('price_from')){
-            $productsQuery->where('price', '>=', $request->price_from);
-        }
-
-        if($request->has('price_to')){
-            $productsQuery->where('price', '<=', $request->price_to);
-        }
+        
+        $this->processFilters($request, $productsQuery);
 
         return $productsQuery->get();
     }
@@ -99,5 +81,33 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+    }
+
+    /**
+     * Helpers
+     * 
+     */
+
+    private function processFilters(Request $request, $productsQuery)
+    {
+        if($request->has('name')){
+            $productsQuery->where('name', $request->name);
+        }
+
+        if($request->has('category_id')){
+            $productsQuery->byCategory('id', $request->category_id);
+        }
+
+        if($request->has('category_name')){
+            $productsQuery->byCategory('name', $request->category_name);
+        }
+
+        if($request->has('price_from')){
+            $productsQuery->where('price', '>=', $request->price_from);
+        }
+
+        if($request->has('price_to')){
+            $productsQuery->where('price', '<=', $request->price_to);
+        }
     }
 }
